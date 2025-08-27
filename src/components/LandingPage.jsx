@@ -2,14 +2,11 @@ import { useNavigate } from 'react-router-dom';
 import { Container, Typography, Button, Box, Paper } from '@mui/material';
 import { Quiz as QuizIcon, PlayArrow as PlayIcon } from '@mui/icons-material';
 import Confetti from 'react-confetti';
-import AppLogo from '../components/AppLogo';
 
 export default function LandingPage() {
   const navigate = useNavigate();
 
-  const handleStartQuiz = () => {
-    navigate('/quiz');
-  };
+  const handleStartQuiz = () => navigate('/nidi-the-accountant/quiz');
 
   return (
     <Container
