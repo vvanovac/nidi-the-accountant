@@ -5,7 +5,7 @@ import Confetti from 'react-confetti';
 import useQuizStore from '../store/quizStore';
 import quizQuestions from '../quiz/quizQuestions';
 
-export default function QuizPage() {
+export default function BalanceSheetQuizPage() {
   const { configuration } = useQuizStore();
 
   const shuffleQuestions = (questions) => {

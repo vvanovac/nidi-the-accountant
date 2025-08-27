@@ -2,7 +2,8 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import LandingPage from './components/LandingPage';
-import QuizPage from './components/QuizPage';
+import BalanceSheetQuizPage from './components/BalanceSheetQuizPage';
+import routes from './constants/routes';
 
 function App() {
   const theme = createTheme({});
@@ -12,8 +13,8 @@ function App() {
       <CssBaseline />
       <Router>
         <Routes>
-          <Route path='/nidi-the-accountant' element={<LandingPage />} />
-          <Route path='/nidi-the-accountant/quiz' element={<QuizPage />} />
+          <Route path={routes.home} element={<LandingPage />} />
+          <Route path={routes.balanceSheetQuiz} element={<BalanceSheetQuizPage />} />
         </Routes>
       </Router>
     </ThemeProvider>
