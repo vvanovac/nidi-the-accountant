@@ -1,8 +1,8 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Box, Button, TextField, Typography } from '@mui/material';
 import LightbulbOutlinedIcon from '@mui/icons-material/LightbulbOutlined';
-import quizQuestions from '../quiz/quizQuestions';
 import Confetti from 'react-confetti';
+import quizQuestions from '../quiz/quizQuestions';
 
 export default function QuizPage() {
   const shuffleQuestions = (questions) => {
@@ -17,6 +17,20 @@ export default function QuizPage() {
   const [questions, setQuestions] = useState(shuffleQuestions(quizQuestions));
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isQuizRevealed, setIsQuizRevealed] = useState(false);
+
+  const refs = useRef([]);
+
+  useEffect(() => {
+    refs.current = refs.current.slice(0, questions.length);
+  }, [questions]);
+
+  const handleKeyDown = (event, index) => {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+
+      refs.current[index + 1]?.focus();
+    }
+  };
 
   const handleAnswerChanged = (event, questionKey) => {
     setQuestions((prevState) => {
@@ -143,6 +157,8 @@ export default function QuizPage() {
                   <TextField
                     value={question.answer}
                     onChange={(event) => handleAnswerChanged(event, question.key)}
+                    inputRef={(element) => (refs.current[index] = element)}
+                    onKeyDown={(event) => handleKeyDown(event, index)}
                     disabled={isSubmitted || isQuizRevealed}
                     error={isSubmitted && !question.isCorrect}
                     helperText={
