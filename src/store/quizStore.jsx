@@ -3,6 +3,7 @@ import { create } from 'zustand';
 const useQuizStore = create((set) => ({
   configuration: {
     shuffleQuestions: true,
+    isHardMode: false,
     includeFixedAssets: true,
     includeCurrentAssets: true,
     includeEquity: true,

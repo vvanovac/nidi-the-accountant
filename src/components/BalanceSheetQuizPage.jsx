@@ -56,10 +56,10 @@ export default function BalanceSheetQuizPage() {
     }
   };
 
-  const handleAnswerChanged = (event, questionKey) => {
+  const handleAnswerChanged = (event, questionId) => {
     setQuestions((prevState) => {
       return prevState.map((question) => {
-        if (question.key !== questionKey) return question;
+        if (question.id !== questionId) return question;
 
         return { ...question, answer: event.target.value };
       });
@@ -80,21 +80,28 @@ export default function BalanceSheetQuizPage() {
     setIsQuizRevealed(false);
   };
 
+  const validateAnswer = (question) => {
+    if (configuration.isHardMode)
+      return question.answer?.trim()?.toLowerCase() === question.correctAnswers?.hard?.toLowerCase();
+
+    return question.answer?.trim()?.toLowerCase() === question.correctAnswers?.easy?.toLowerCase();
+  };
+
   const handleAnswersSubmitted = () => {
     setQuestions((prevState) => {
       return prevState.map((question) => ({
         ...question,
-        isCorrect: question.answer?.trim()?.toLowerCase() === question.correctAnswer?.toLowerCase(),
+        isCorrect: validateAnswer(question),
       }));
     });
 
     setIsSubmitted(true);
   };
 
-  const handleHintRevealed = (questionKey) => {
+  const handleHintRevealed = (questionId) => {
     setQuestions((prevState) => {
       return prevState.map((question) => {
-        if (question.key !== questionKey) return question;
+        if (question.id !== questionId) return question;
 
         return { ...question, showHint: true };
       });
@@ -180,16 +187,20 @@ export default function BalanceSheetQuizPage() {
                 >
                   <TextField
                     value={question.answer}
-                    onChange={(event) => handleAnswerChanged(event, question.key)}
+                    onChange={(event) => handleAnswerChanged(event, question.id)}
                     inputRef={(element) => (refs.current[index] = element)}
                     onKeyDown={(event) => handleKeyDown(event, index)}
                     disabled={isSubmitted || isQuizRevealed}
                     error={isSubmitted && !question.isCorrect}
                     helperText={
                       isQuizRevealed
-                        ? question.correctAnswer
+                        ? configuration.isHardMode
+                          ? question.correctAnswers.hard
+                          : question.correctAnswers.easy
                         : isSubmitted && !question.isCorrect
-                          ? question.correctAnswer
+                          ? configuration.isHardMode
+                            ? question.correctAnswers.hard
+                            : question.correctAnswers.easy
                           : question.showHint
                             ? question.hint
                             : ' '
@@ -202,7 +213,7 @@ export default function BalanceSheetQuizPage() {
                   />
                   <Button
                     disabled={question.showHint || isSubmitted || isQuizRevealed}
-                    onClick={() => handleHintRevealed(question.key)}
+                    onClick={() => handleHintRevealed(question.id)}
                     sx={{
                       paddingY: '8px !important',
                       paddingX: '0px !important',

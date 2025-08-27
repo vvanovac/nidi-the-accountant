@@ -1,6 +1,17 @@
 import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Box, Button, Checkbox, Collapse, FormControlLabel, FormGroup, Paper, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  Checkbox,
+  Collapse,
+  FormControlLabel,
+  FormGroup,
+  Paper,
+  Radio,
+  RadioGroup,
+  Typography,
+} from '@mui/material';
 import { PlayArrow as PlayIcon } from '@mui/icons-material';
 import Confetti from 'react-confetti';
 import useQuizStore from '../store/quizStore';
@@ -36,6 +47,8 @@ export default function BalanceSheetQuizCard() {
     setConfiguration({ [name]: checked });
   };
 
+  const handleQuizModeChanged = (event) => setConfiguration({ isHardMode: event.target.value === 'hard' });
+
   const isAnyCategorySelected = useMemo(() => {
     return [
       configuration.includeFixedAssets,
@@ -60,6 +73,7 @@ export default function BalanceSheetQuizCard() {
         padding: 3,
       }}
     >
+      {JSON.stringify(configuration.isHardMode)}
       <Box sx={{ textAlign: 'center' }}>
         <Typography variant='h4'>Bilans stanja</Typography>
         <Typography variant='h6'>Klasifikacija stavki bilansa stanja</Typography>
@@ -92,6 +106,20 @@ export default function BalanceSheetQuizCard() {
                 }
                 label='Promiješaj pitanja'
               />
+            </FormGroup>
+          </ConfigurationSection>
+          <ConfigurationSection>
+            <Typography variant='body1'>Nivo</Typography>
+            <FormGroup sx={{ marginTop: 1 }}>
+              <RadioGroup
+                row
+                value={configuration.isHardMode ? 'hard' : 'easy'}
+                name='isHardMode'
+                onChange={handleQuizModeChanged}
+              >
+                <FormControlLabel value='easy' control={<Radio />} label='Osnovni' />
+                <FormControlLabel value='hard' control={<Radio />} label='Napredni' />
+              </RadioGroup>
             </FormGroup>
           </ConfigurationSection>
           <ConfigurationSection isLastItem={true}>
