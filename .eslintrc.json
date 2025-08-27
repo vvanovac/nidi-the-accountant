@@ -1,0 +1,87 @@
+{
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:react/jsx-runtime",
+    "plugin:prettier/recommended"
+  ],
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  },
+  "env": {
+    "browser": true,
+    "node": true,
+    "es6": true,
+    "jest": true
+  },
+  "plugins": [
+    "react",
+    "import",
+    "react-hooks"
+  ],
+  "rules": {
+    "react-hooks/exhaustive-deps": "off",
+    "no-template-curly-in-string": "off",
+    "react/react-in-jsx-scope": "off",
+    "indent": "off",
+    "no-multi-spaces": "error",
+    "no-trailing-spaces": "error",
+    "no-multiple-empty-lines": [
+      "error",
+      {
+        "max": 1,
+        "maxEOF": 1,
+        "maxBOF": 0
+      }
+    ],
+    "jsx-quotes": [
+      "error",
+      "prefer-single"
+    ],
+    "comma-dangle": [
+      "error",
+      "always-multiline"
+    ],
+    "eqeqeq": "error",
+    "semi": [
+      "error",
+      "always"
+    ],
+    "quotes": [
+      "error",
+      "single",
+      {
+        "avoidEscape": true
+      }
+    ],
+    "no-duplicate-imports": "error",
+    "no-console": [
+      "warn"
+    ],
+    "max-len": [
+      "warn",
+      120,
+      {
+        "ignoreComments": true,
+        "ignoreStrings": true,
+        "ignoreTemplateLiterals": true,
+        "ignoreUrls": true
+      }
+    ],
+    "react/prop-types": "off",
+    "no-debugger": "error",
+    "object-curly-spacing": [
+      "error",
+      "always"
+    ]
+  }
+}
