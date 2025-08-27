@@ -2,9 +2,12 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { Box, Button, TextField, Typography } from '@mui/material';
 import LightbulbOutlinedIcon from '@mui/icons-material/LightbulbOutlined';
 import Confetti from 'react-confetti';
+import useQuizStore from '../store/quizStore';
 import quizQuestions from '../quiz/quizQuestions';
 
 export default function QuizPage() {
+  const { configuration } = useQuizStore();
+
   const shuffleQuestions = (questions) => {
     const shuffled = [...questions];
     for (let i = shuffled.length - 1; i > 0; i--) {
@@ -14,7 +17,28 @@ export default function QuizPage() {
     return shuffled;
   };
 
-  const [questions, setQuestions] = useState(shuffleQuestions(quizQuestions));
+  const filterQuizQuestions = () => {
+    const categoriesToInclude = [];
+    if (configuration.includeFixedAssets) categoriesToInclude.push(1);
+    if (configuration.includeCurrentAssets) categoriesToInclude.push(2);
+    if (configuration.includeEquity) categoriesToInclude.push(3);
+    if (configuration.includeNonCurrentLiabilities) categoriesToInclude.push(4);
+    if (configuration.includeCurrentLiabilities) categoriesToInclude.push(5);
+
+    if (categoriesToInclude.length === 5) return quizQuestions;
+
+    return quizQuestions.filter((question) => categoriesToInclude.includes(question.category));
+  };
+
+  const generateQuestions = () => {
+    const questions = filterQuizQuestions();
+
+    if (configuration.shuffleQuestions) return shuffleQuestions(questions);
+
+    return questions;
+  };
+
+  const [questions, setQuestions] = useState(generateQuestions());
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isQuizRevealed, setIsQuizRevealed] = useState(false);
 
@@ -60,7 +84,7 @@ export default function QuizPage() {
     setQuestions((prevState) => {
       return prevState.map((question) => ({
         ...question,
-        isCorrect: question.answer?.toLowerCase() === question.correctAnswer?.toLowerCase(),
+        isCorrect: question.answer?.trim()?.toLowerCase() === question.correctAnswer?.toLowerCase(),
       }));
     });
 
@@ -200,8 +224,8 @@ export default function QuizPage() {
             gap: 2,
           }}
         >
-          {isSubmitted ? (
-            <Button size='large' variant='contained' disabled={isQuizRevealed} onClick={handleQuizReset}>
+          {isSubmitted || isQuizRevealed ? (
+            <Button size='large' variant='contained' onClick={handleQuizReset}>
               Počni ponovo
             </Button>
           ) : (
