@@ -342,7 +342,7 @@ const quizQuestions = [
   {
     id: 35,
     key: 'isvpfitmim',
-    title: 'Dati dugoročni krediti',
+    title: 'Dati kratkoročni krediti',
     hint: 'Aktiva',
     answer: '',
     correctAnswer: 'Tekuća sredstva',
