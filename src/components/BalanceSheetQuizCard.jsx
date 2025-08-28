@@ -69,11 +69,10 @@ export default function BalanceSheetQuizCard() {
           md: '50%',
         },
         borderRadius: '12px',
-        backgroundColor: '#A29590',
+        backgroundColor: '#85756E',
         padding: 3,
       }}
     >
-      {JSON.stringify(configuration.isHardMode)}
       <Box sx={{ textAlign: 'center' }}>
         <Typography variant='h4'>Bilans stanja</Typography>
         <Typography variant='h6'>Klasifikacija stavki bilansa stanja</Typography>
@@ -87,7 +86,7 @@ export default function BalanceSheetQuizCard() {
         }}
       >
         <Typography variant='body1'>Za najbolje iskustvo, prilagodi kviz po svojoj mjeri</Typography>
-        <Button size='small' variant='outlined' color='info' onClick={handleConfigurationToggled}>
+        <Button size='small' variant='contained' color='info' onClick={handleConfigurationToggled}>
           Podešavanja
         </Button>
       </Box>

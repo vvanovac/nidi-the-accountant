@@ -123,6 +123,8 @@ export default function BalanceSheetQuizPage() {
     setQuestions((prevState) => prevState.map((question) => ({ ...question, showHint: true })));
   };
 
+  const totalHintsShown = useMemo(() => questions.filter((question) => question.showHint)?.length, [questions]);
+
   const isEveryHintShown = useMemo(() => questions.every((question) => question.showHint), [questions]);
 
   const totalScore = useMemo(() => questions.filter((question) => question.isCorrect)?.length, [questions]);
@@ -212,7 +214,12 @@ export default function BalanceSheetQuizPage() {
                     }}
                   />
                   <Button
-                    disabled={question.showHint || isSubmitted || isQuizRevealed}
+                    disabled={
+                      question.showHint ||
+                      isSubmitted ||
+                      isQuizRevealed ||
+                      (totalHintsShown >= 5 && configuration.isHardMode)
+                    }
                     onClick={() => handleHintRevealed(question.id)}
                     sx={{
                       paddingY: '8px !important',
@@ -249,15 +256,16 @@ export default function BalanceSheetQuizPage() {
               Provjeri odgovore
             </Button>
           )}
-
-          <Button
-            size='large'
-            variant='outlined'
-            disabled={isSubmitted || isEveryHintShown || isQuizRevealed}
-            onClick={handleAllHintsRevealed}
-          >
-            Prikaži sve pomoći
-          </Button>
+          {!configuration.isHardMode && (
+            <Button
+              size='large'
+              variant='outlined'
+              disabled={isSubmitted || isEveryHintShown || isQuizRevealed}
+              onClick={handleAllHintsRevealed}
+            >
+              Prikaži sve pomoći
+            </Button>
+          )}
           <Button
             size='large'
             variant='outlined'
