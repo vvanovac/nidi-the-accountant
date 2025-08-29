@@ -3,15 +3,15 @@ import { createTheme } from '@mui/material/styles';
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#5F0F40',
-      light: '#8B1538',
-      dark: '#3D0A2A',
+      main: '#6255B4',
+      light: '#6F63BB',
+      dark: '#574BAA',
       contrastText: '#FBE1D0',
     },
     secondary: {
-      main: '#D4A574',
-      light: '#E6C19A',
-      dark: '#B8945F',
+      main: '#FEFCAE',
+      light: '#FEFDC2',
+      dark: '#FEFC9A',
       contrastText: '#2A1810',
     },
     error: {
@@ -39,24 +39,24 @@ const theme = createTheme({
       contrastText: '#FBE1D0',
     },
     background: {
-      default: '#ffffff',
-      paper: '#f5f5f5',
+      default: '#50449C',
+      paper: '#D3D3D3',
     },
     text: {
-      primary: '#FBE1D0',
-      secondary: '#E6C19A',
-      disabled: '#B8945F',
+      primary: '#1D1939',
+      secondary: '#FBE1D0',
+      disabled: '#FBE1D0',
     },
   },
-  // breakpoints: {
-  //   values: {
-  //     xs: 0,
-  //     sm: 480,
-  //     md: 768,
-  //     lg: 1024,
-  //     xl: 1440,
-  //   },
-  // },
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 480,
+      md: 768,
+      lg: 1024,
+      xl: 1440,
+    },
+  },
 });
 
 export default theme;

@@ -13,8 +13,36 @@ export default function LandingPage() {
     <Page>
       <Confetti width={1500} height={850} />
       <Box sx={{ textAlign: 'center' }}>
-        <Typography variant='h2'>Dobro došla, Nidi!</Typography>
-        <Typography variant='h3'>Ovo je tvoj interaktivni računovodstveni kviz</Typography>
+        <Typography
+          variant='h2'
+          sx={{
+            fontSize: {
+              xs: 50,
+              sm: 60,
+            },
+            marginBottom: {
+              xs: 1,
+              sm: 0,
+            },
+          }}
+        >
+          Dobro došla, Nidi!
+        </Typography>
+        <Typography
+          variant='h3'
+          sx={{
+            fontSize: {
+              xs: 40,
+              sm: 48,
+            },
+            marginBottom: {
+              xs: 2,
+              sm: 0,
+            },
+          }}
+        >
+          Ovo je tvoj interaktivni računovodstveni kviz
+        </Typography>
       </Box>
       <Box
         sx={{

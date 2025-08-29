@@ -11,6 +11,7 @@ import {
   Radio,
   RadioGroup,
   Typography,
+  useTheme,
 } from '@mui/material';
 import { PlayArrow as PlayIcon } from '@mui/icons-material';
 import Confetti from 'react-confetti';
@@ -18,12 +19,15 @@ import useQuizStore from '../store/quizStore';
 import routes from '../constants/routes';
 
 const ConfigurationSection = ({ isLastItem = false, children }) => {
+  const theme = useTheme();
+
   return (
     <Box
       sx={{
         padding: 1,
         borderRadius: '12px',
-        backgroundColor: '#90817A',
+        color: theme.palette.text.primary,
+        backgroundColor: theme.palette.secondary.main,
         marginBottom: isLastItem ? 0 : 1,
       }}
     >
@@ -33,6 +37,8 @@ const ConfigurationSection = ({ isLastItem = false, children }) => {
 };
 
 export default function BalanceSheetQuizCard() {
+  const theme = useTheme();
+
   const navigate = useNavigate();
 
   const { configuration, setConfiguration } = useQuizStore();
@@ -69,7 +75,8 @@ export default function BalanceSheetQuizCard() {
           md: '50%',
         },
         borderRadius: '12px',
-        backgroundColor: '#85756E',
+        backgroundColor: theme.palette.background.default,
+        color: theme.palette.text.secondary,
         padding: 3,
       }}
     >
@@ -86,7 +93,17 @@ export default function BalanceSheetQuizCard() {
         }}
       >
         <Typography variant='body1'>Za najbolje iskustvo, prilagodi kviz po svojoj mjeri</Typography>
-        <Button size='small' variant='contained' color='info' onClick={handleConfigurationToggled}>
+        <Button
+          size='small'
+          variant='contained'
+          color='secondary'
+          onClick={handleConfigurationToggled}
+          sx={{
+            color: theme.palette.text.primary,
+            minWidth: 120,
+            maxWidth: 120,
+          }}
+        >
           Podešavanja
         </Button>
       </Box>
@@ -200,6 +217,10 @@ export default function BalanceSheetQuizCard() {
             paddingY: 1.5,
             paddingX: 4,
             borderRadius: 3,
+            fontWeight: 'bold',
+            color: '#1D1939',
+            backgroundColor: '#FEFCAE',
+            border: '1px solid #FEFCAE',
           }}
         >
           Početak

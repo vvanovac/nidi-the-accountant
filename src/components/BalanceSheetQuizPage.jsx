@@ -1,12 +1,22 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { Box, Button, TextField, Typography } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import { AppBar, Box, Button, TextField, Toolbar, Typography, useTheme } from '@mui/material';
+import HomeIcon from '@mui/icons-material/Home';
 import LightbulbOutlinedIcon from '@mui/icons-material/LightbulbOutlined';
 import Confetti from 'react-confetti';
 import useQuizStore from '../store/quizStore';
 import quizQuestions from '../quiz/quizQuestions';
+import Page from '../components/Page';
+import routes from '../constants/routes';
 
 export default function BalanceSheetQuizPage() {
   const { configuration } = useQuizStore();
+
+  const theme = useTheme();
+
+  const navigate = useNavigate();
+
+  const handleHomeButtonClicked = () => navigate(routes.home);
 
   const shuffleQuestions = (questions) => {
     const shuffled = [...questions];
@@ -130,13 +140,15 @@ export default function BalanceSheetQuizPage() {
   const totalScore = useMemo(() => questions.filter((question) => question.isCorrect)?.length, [questions]);
 
   return (
-    <Box
-      sx={{
-        width: '100%',
-        minHeight: '100vh',
-      }}
-    >
-      {isSubmitted && totalScore === questions.length && <Confetti width={1500} height={850} />}
+    <Page>
+      <AppBar position='static' sx={{ marginBottom: 3 }}>
+        <Toolbar>
+          <Button color='secondary' startIcon={<HomeIcon />} onClick={handleHomeButtonClicked}>
+            Početna
+          </Button>
+        </Toolbar>
+      </AppBar>
+      {isSubmitted && totalScore === questions.length && <Confetti width={1500} height={questions.length * 85} />}
       <Box
         sx={{
           width: '100%',
@@ -150,15 +162,31 @@ export default function BalanceSheetQuizPage() {
             display: 'flex',
             flexDirection: 'column',
             gap: 2,
-            paddingTop: 4,
+            paddingTop: {
+              xs: 0,
+              sm: 4,
+            },
           }}
         >
           <Typography variant='h4'>Nidi, tvoj zadatak je da rasporediš sljedeće pojmove po kategorijama.</Typography>
-          <Typography variant='h5'>Ako ne uspiješ iz prvog pokušaja, ne brini se - savladaćeš!</Typography>
+          <Typography
+            variant='h5'
+            sx={{
+              fontSize: {
+                xs: 20,
+                sm: 24,
+              },
+            }}
+          >
+            Ako ne uspiješ iz prvog pokušaja, ne brini se - savladaćeš!
+          </Typography>
         </Box>
         <Box
           sx={{
-            marginTop: 10,
+            marginTop: {
+              xs: 5,
+              sm: 10,
+            },
             display: 'flex',
             flexGrow: 1,
           }}
@@ -170,20 +198,47 @@ export default function BalanceSheetQuizPage() {
                 sx={{
                   display: 'flex',
                   alignItems: 'flex-start',
-                  gap: 3,
+                  flexDirection: {
+                    xs: 'column',
+                    sm: 'row',
+                  },
+                  gap: {
+                    xs: 1,
+                    sm: 3,
+                  },
                   marginY: 0.5,
+                  width: '100%',
                 }}
               >
-                <Box sx={{ width: 350 }}>
-                  <Typography sx={{ marginTop: 1 }}>
+                <Box
+                  sx={{
+                    flex: '1 1 0',
+                    minWidth: 0,
+                    maxWidth: '100%',
+                  }}
+                >
+                  <Typography
+                    sx={{
+                      marginTop: {
+                        xs: 0,
+                        sm: 1,
+                      },
+                    }}
+                  >
                     {index + 1}.&nbsp;{question.title}
                   </Typography>
                 </Box>
                 <Box
                   sx={{
-                    width: 400,
+                    minWidth: 0,
+                    width: {
+                      xs: '100%',
+                      sm: null,
+                    },
+                    maxWidth: '100%',
                     display: 'flex',
                     alignItems: 'flex-start',
+                    flex: '1 1 0',
                     gap: 1,
                   }}
                 >
@@ -209,6 +264,7 @@ export default function BalanceSheetQuizPage() {
                     }
                     size='small'
                     sx={{
+                      flex: 1,
                       width: '100%',
                       marginBottom: 1,
                     }}
@@ -222,11 +278,14 @@ export default function BalanceSheetQuizPage() {
                     }
                     onClick={() => handleHintRevealed(question.id)}
                     sx={{
+                      color: '#6255B4',
                       paddingY: '8px !important',
                       paddingX: '0px !important',
+                      minWidth: '30px !important',
+                      maxWidth: '30px !important',
                     }}
                   >
-                    <LightbulbOutlinedIcon color='text.primary' />
+                    <LightbulbOutlinedIcon />
                   </Button>
                 </Box>
               </Box>
@@ -236,22 +295,49 @@ export default function BalanceSheetQuizPage() {
         {isSubmitted && <Box>Tvoj rezultat je {totalScore} tačnih odgovora.</Box>}
         <Box
           sx={{
-            marginTop: 5,
+            marginTop: {
+              xs: 2,
+              sm: 5,
+            },
+            paddingBottom: 3,
             display: 'flex',
+            flexDirection: {
+              xs: 'column',
+              sm: 'row',
+            },
             justifyContent: 'center',
+            alignItems: 'center',
             gap: 2,
           }}
         >
           {isSubmitted || isQuizRevealed ? (
-            <Button size='large' variant='contained' onClick={handleQuizReset}>
+            <Button
+              size='large'
+              variant='contained'
+              color='primary'
+              onClick={handleQuizReset}
+              sx={{
+                width: {
+                  xs: '100%',
+                  sm: 'fit-content',
+                },
+              }}
+            >
               Počni ponovo
             </Button>
           ) : (
             <Button
               size='large'
               variant='contained'
+              color='primary'
               disabled={isSubmitted || isQuizRevealed}
               onClick={handleAnswersSubmitted}
+              sx={{
+                width: {
+                  xs: '100%',
+                  sm: 'fit-content',
+                },
+              }}
             >
               Provjeri odgovore
             </Button>
@@ -260,8 +346,15 @@ export default function BalanceSheetQuizPage() {
             <Button
               size='large'
               variant='outlined'
+              color='primary'
               disabled={isSubmitted || isEveryHintShown || isQuizRevealed}
               onClick={handleAllHintsRevealed}
+              sx={{
+                width: {
+                  xs: '100%',
+                  sm: 'fit-content',
+                },
+              }}
             >
               Prikaži sve pomoći
             </Button>
@@ -272,11 +365,17 @@ export default function BalanceSheetQuizPage() {
             color='error'
             disabled={isSubmitted || isQuizRevealed}
             onClick={handleAllAnswersRevealed}
+            sx={{
+              width: {
+                xs: '100%',
+                sm: 'fit-content',
+              },
+            }}
           >
             Prikaži tačne odgovore
           </Button>
         </Box>
       </Box>
-    </Box>
+    </Page>
   );
 }
