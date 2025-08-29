@@ -7,6 +7,7 @@ import Confetti from 'react-confetti';
 import useQuizStore from '../store/quizStore';
 import quizQuestions from '../quiz/quizQuestions';
 import Page from '../components/Page';
+import { useScreenSize } from '../hooks/useScreenSize';
 import routes from '../constants/routes';
 
 export default function BalanceSheetQuizPage() {
@@ -15,6 +16,8 @@ export default function BalanceSheetQuizPage() {
   const theme = useTheme();
 
   const navigate = useNavigate();
+
+  const { width, height } = useScreenSize();
 
   const handleHomeButtonClicked = () => navigate(routes.home);
 
@@ -141,14 +144,6 @@ export default function BalanceSheetQuizPage() {
 
   return (
     <Page>
-      <AppBar position='static' sx={{ marginBottom: 3 }}>
-        <Toolbar>
-          <Button color='secondary' startIcon={<HomeIcon />} onClick={handleHomeButtonClicked}>
-            Početna
-          </Button>
-        </Toolbar>
-      </AppBar>
-      {isSubmitted && totalScore === questions.length && <Confetti width={1500} height={questions.length * 85} />}
       <Box
         sx={{
           width: '100%',
@@ -157,6 +152,14 @@ export default function BalanceSheetQuizPage() {
           minHeight: '90vh',
         }}
       >
+        <AppBar position='static' sx={{ marginBottom: 3 }}>
+          <Toolbar>
+            <Button color='secondary' startIcon={<HomeIcon />} onClick={handleHomeButtonClicked}>
+              Početna
+            </Button>
+          </Toolbar>
+        </AppBar>
+        {1 > 0 && <Confetti width={width} height={height} />}
         <Box
           sx={{
             display: 'flex',

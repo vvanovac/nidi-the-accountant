@@ -44,7 +44,7 @@ const theme = createTheme({
     },
     text: {
       primary: '#1D1939',
-      secondary: '#FBE1D0',
+      secondary: '#1D1939',
       disabled: '#FBE1D0',
     },
   },

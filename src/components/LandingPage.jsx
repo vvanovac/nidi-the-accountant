@@ -6,65 +6,77 @@ import Confetti from 'react-confetti';
 import { create } from 'zustand';
 import Page from './Page';
 import BalanceSheetQuizCard from './BalanceSheetQuizCard';
+import { useScreenSize } from '../hooks/useScreenSize';
 import useQuizStore from '../store/quizStore';
 
 export default function LandingPage() {
+  const { width, height } = useScreenSize();
+
   return (
     <Page>
-      <Confetti width={1500} height={850} />
-      <Box sx={{ textAlign: 'center' }}>
-        <Typography
-          variant='h2'
-          sx={{
-            fontSize: {
-              xs: 50,
-              sm: 60,
-            },
-            marginBottom: {
-              xs: 1,
-              sm: 0,
-            },
-          }}
-        >
-          Dobro došla, Nidi!
-        </Typography>
-        <Typography
-          variant='h3'
-          sx={{
-            fontSize: {
-              xs: 40,
-              sm: 48,
-            },
-            marginBottom: {
-              xs: 2,
-              sm: 0,
-            },
-          }}
-        >
-          Ovo je tvoj interaktivni računovodstveni kviz
-        </Typography>
-      </Box>
       <Box
         sx={{
-          marginTop: 3,
-          textAlign: 'center',
-        }}
-      >
-        <Typography variant='h4'>Da li si spremna?</Typography>
-        <Typography variant='h6'>
-          Testiraj svoje znanje i pripremi se za ispit kroz interaktivnu kviz platformu!
-        </Typography>
-      </Box>
-      <Box
-        sx={{
-          marginTop: 3,
-          paddingBottom: 3,
           width: '100%',
-          display: 'flex',
-          justifyContent: 'center',
+          maxWidth: 1000,
+          marginX: 'auto',
+          minHeight: '90vh',
         }}
       >
-        <BalanceSheetQuizCard />
+        <Confetti width={width} height={height} />
+        <Box sx={{ textAlign: 'center' }}>
+          <Typography
+            variant='h2'
+            sx={{
+              fontSize: {
+                xs: 50,
+                sm: 60,
+              },
+              marginBottom: {
+                xs: 1,
+                sm: 0,
+              },
+            }}
+          >
+            Dobro došla, Nidi!
+          </Typography>
+          <Typography
+            variant='h3'
+            sx={{
+              fontSize: {
+                xs: 40,
+                sm: 48,
+              },
+              marginBottom: {
+                xs: 2,
+                sm: 0,
+              },
+            }}
+          >
+            Ovo je tvoj interaktivni računovodstveni kviz
+          </Typography>
+        </Box>
+        <Box
+          sx={{
+            marginTop: 3,
+            textAlign: 'center',
+          }}
+        >
+          <Typography variant='h4'>Da li si spremna?</Typography>
+          <Typography variant='h6'>
+            Testiraj svoje znanje i pripremi se za ispit kroz interaktivnu kviz platformu!
+          </Typography>
+        </Box>
+        <Box
+          sx={{
+            marginTop: 3,
+            paddingBottom: 3,
+            width: '100%',
+            display: 'flex',
+            justifyContent: 'center',
+          }}
+        >
+          <BalanceSheetQuizCard />
+        </Box>
       </Box>
     </Page>
   );
