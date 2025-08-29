@@ -159,7 +159,7 @@ export default function BalanceSheetQuizPage() {
             </Button>
           </Toolbar>
         </AppBar>
-        {1 > 0 && <Confetti width={width} height={height} />}
+        {isSubmitted && totalScore === questions.length && <Confetti width={width} height={questions.length * 80} />}
         <Box
           sx={{
             display: 'flex',

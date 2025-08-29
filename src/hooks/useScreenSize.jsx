@@ -3,14 +3,14 @@ import { useState, useEffect } from 'react';
 export function useScreenSize() {
   const [size, setSize] = useState({
     width: window.innerWidth,
-    height: window.innerHeight,
+    height: document.documentElement.scrollHeight,
   });
 
   useEffect(() => {
     const handleResize = () => {
       setSize({
         width: window.innerWidth,
-        height: window.innerHeight,
+        height: document.documentElement.scrollHeight,
       });
     };
 
@@ -20,6 +20,6 @@ export function useScreenSize() {
 
   return {
     width: size.width * 0.9,
-    height: size.height * 0.9,
+    height: size.height * 0.95,
   };
 }
