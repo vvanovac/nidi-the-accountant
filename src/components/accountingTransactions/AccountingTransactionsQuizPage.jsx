@@ -34,7 +34,7 @@ export default function AccountingTransactionsQuizPage() {
         sx={{
           marginTop: {
             xs: 3,
-            sm: 7,
+            sm: 8,
           },
           paddingBottom: 4,
           display: 'flex',

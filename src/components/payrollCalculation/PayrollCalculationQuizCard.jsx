@@ -1,8 +1,14 @@
+import { useNavigate } from 'react-router-dom';
 import { Box, Paper, Typography, useTheme } from '@mui/material';
-// import StartQuizButton from '../shared/StartQuizButton';
+import StartQuizButton from '../shared/StartQuizButton';
+import routes from '../../constants/routes';
 
 export default function PayrollCalculationQuizCard() {
   const theme = useTheme();
+
+  const navigate = useNavigate();
+
+  const handleQuizStarted = () => navigate(routes.payrollCalculationQuiz);
 
   return (
     <Paper
@@ -21,9 +27,7 @@ export default function PayrollCalculationQuizCard() {
         <Typography variant='h4'>Obračun plata</Typography>
         <Typography variant='h6'>Vježba obračuna plata sa svim pratećim troškovima</Typography>
       </Box>
-      <Typography variant='body1' sx={{ textAlign: 'center', marginTop: 2, fontStyle: 'italic' }}>
-        U pripremi, strpi se... :)
-      </Typography>
+      <StartQuizButton onQuizStarted={handleQuizStarted} />
     </Paper>
   );
 }
