@@ -11,10 +11,18 @@ export default function AccountingTransactionsQuizPage() {
 
   const { configuration } = accountingTransactionsQuizStore();
 
-  const generateQuestions = (questions) => {
-    if (configuration.shuffleQuestions) return shuffleQuestions(questions);
+  const getFinalNumberOfQuestions = (questions) => {
+    return configuration.numberOfQuestions ? questions.slice(0, configuration.numberOfQuestions) : questions;
+  };
 
-    return questions;
+  const generateQuestions = (questions) => {
+    if (configuration.shuffleQuestions) {
+      const shuffledQuestions = shuffleQuestions(questions);
+
+      return getFinalNumberOfQuestions(shuffledQuestions);
+    }
+
+    return getFinalNumberOfQuestions(questions);
   };
 
   const [questions] = useState(generateQuestions(accountingTransactionsQuizQuestions));
@@ -25,9 +33,10 @@ export default function AccountingTransactionsQuizPage() {
       <Box
         sx={{
           marginTop: {
-            xs: 5,
-            sm: 10,
+            xs: 3,
+            sm: 7,
           },
+          paddingBottom: 4,
           display: 'flex',
           flexDirection: 'column',
           flexGrow: 1,

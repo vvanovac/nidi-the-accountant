@@ -3,6 +3,7 @@ import { create } from 'zustand';
 const accountingTransactionsQuizStore = create((set) => ({
   configuration: {
     shuffleQuestions: true,
+    numberOfQuestions: null,
   },
   setConfiguration: (setting) =>
     set((state) => ({

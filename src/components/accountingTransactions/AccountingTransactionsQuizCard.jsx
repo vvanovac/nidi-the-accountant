@@ -1,6 +1,17 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Box, Checkbox, Collapse, FormControlLabel, FormGroup, Paper, Typography, useTheme } from '@mui/material';
+import {
+  Box,
+  Checkbox,
+  Collapse,
+  FormControlLabel,
+  FormGroup,
+  Paper,
+  Radio,
+  RadioGroup,
+  Typography,
+  useTheme,
+} from '@mui/material';
 import QuizCardSettingsButton from '../shared/QuizCardSettingsButton';
 import QuizCardConfigurationSection from '../shared/QuizCardConfigurationSection';
 import StartQuizButton from '../shared/StartQuizButton';
@@ -22,6 +33,12 @@ export default function AccountingTransactionsQuizCard() {
     const { name, checked } = event.target;
 
     setConfiguration({ [name]: checked });
+  };
+
+  const handleNumberOfQuestionsConfigurationChanged = (event) => {
+    const { value } = event.target;
+
+    setConfiguration({ numberOfQuestions: value === 'all' ? null : Number(value) });
   };
 
   const handleQuizStarted = () => navigate(routes.accountingTransactionsQuiz);
@@ -58,6 +75,25 @@ export default function AccountingTransactionsQuizCard() {
                 }
                 label='Promiješaj promjene'
               />
+            </FormGroup>
+          </QuizCardConfigurationSection>
+          <QuizCardConfigurationSection title='Broj promjena'>
+            <FormGroup>
+              <RadioGroup
+                row
+                value={configuration.numberOfQuestions === null ? 'all' : configuration.numberOfQuestions}
+                name=''
+                onChange={handleNumberOfQuestionsConfigurationChanged}
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                }}
+              >
+                <FormControlLabel value={5} control={<Radio />} label='5 promjena' />
+                <FormControlLabel value={10} control={<Radio />} label='10 promjena' />
+                <FormControlLabel value={25} control={<Radio />} label='25 promjena' />
+                <FormControlLabel value='all' control={<Radio />} label='Sve promjene' />
+              </RadioGroup>
             </FormGroup>
           </QuizCardConfigurationSection>
         </Box>
