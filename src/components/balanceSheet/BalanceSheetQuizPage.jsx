@@ -3,33 +3,22 @@ import { useNavigate } from 'react-router-dom';
 import { AppBar, Box, Button, TextField, Toolbar, Typography, useTheme } from '@mui/material';
 import HomeIcon from '@mui/icons-material/Home';
 import LightbulbOutlinedIcon from '@mui/icons-material/LightbulbOutlined';
-import Confetti from 'react-confetti';
-import quizQuestions from '../../quiz/quizQuestions';
+import balanceSheetQuizQuestions from '../../quiz/balanceSheetQuizQuestions';
 import Page from '../shared/Page';
 import PageTitle from '../shared/PageTitle';
-import { useScreenSize } from '../../hooks/useScreenSize';
-import useQuizStore from '../../store/quizStore';
+import Confetti from '../shared/Confetti';
+import { shuffleQuestions } from '../../helpers/questionsShuffleHelper';
+import balanceSheetQuizStore from '../../store/balanceSheetQuizStore';
 import routes from '../../constants/routes';
 
 export default function BalanceSheetQuizPage() {
-  const { configuration } = useQuizStore();
+  const { configuration } = balanceSheetQuizStore();
 
   const theme = useTheme();
 
   const navigate = useNavigate();
 
-  const { width, height } = useScreenSize();
-
   const handleHomeButtonClicked = () => navigate(routes.home);
-
-  const shuffleQuestions = (questions) => {
-    const shuffled = [...questions];
-    for (let i = shuffled.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-    }
-    return shuffled;
-  };
 
   const filterQuizQuestions = () => {
     const categoriesToInclude = [];
@@ -39,9 +28,9 @@ export default function BalanceSheetQuizPage() {
     if (configuration.includeNonCurrentLiabilities) categoriesToInclude.push(4);
     if (configuration.includeCurrentLiabilities) categoriesToInclude.push(5);
 
-    if (categoriesToInclude.length === 5) return quizQuestions;
+    if (categoriesToInclude.length === 5) return balanceSheetQuizQuestions;
 
-    return quizQuestions.filter((question) => categoriesToInclude.includes(question.category));
+    return balanceSheetQuizQuestions.filter((question) => categoriesToInclude.includes(question.category));
   };
 
   const generateQuestions = () => {
@@ -145,32 +134,7 @@ export default function BalanceSheetQuizPage() {
 
   return (
     <Page>
-      {isSubmitted && totalScore === questions.length && <Confetti width={width} height={questions.length * 80} />}
       <PageTitle title='Nidi, tvoj zadatak je da rasporediš sljedeće pojmove po kategorijama.' />
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          gap: 2,
-          paddingTop: {
-            xs: 0,
-            sm: 4,
-          },
-        }}
-      >
-        <Typography variant='h4'>Nidi, tvoj zadatak je da rasporediš sljedeće pojmove po kategorijama.</Typography>
-        <Typography
-          variant='h5'
-          sx={{
-            fontSize: {
-              xs: 20,
-              sm: 24,
-            },
-          }}
-        >
-          Ako ne uspiješ iz prvog pokušaja, ne brini se - savladaćeš!
-        </Typography>
-      </Box>
       <Box
         sx={{
           marginTop: {
@@ -282,7 +246,12 @@ export default function BalanceSheetQuizPage() {
           ))}
         </form>
       </Box>
-      {isSubmitted && <Box>Tvoj rezultat je {totalScore} tačnih odgovora.</Box>}
+      {isSubmitted && (
+        <Box>
+          {totalScore === questions.length && <Confetti />}
+          Tvoj rezultat je {totalScore} tačnih odgovora.
+        </Box>
+      )}
       <Box
         sx={{
           marginTop: {

@@ -14,10 +14,9 @@ import {
   useTheme,
 } from '@mui/material';
 import { PlayArrow as PlayIcon } from '@mui/icons-material';
-import Confetti from 'react-confetti';
 import QuizCardSettingsButton from '../shared/QuizCardSettingsButton';
 import QuizCardConfigurationSection from '../shared/QuizCardConfigurationSection';
-import useQuizStore from '../../store/quizStore';
+import balanceSheetQuizStore from '../../store/balanceSheetQuizStore';
 import routes from '../../constants/routes';
 
 export default function BalanceSheetQuizCard() {
@@ -25,7 +24,7 @@ export default function BalanceSheetQuizCard() {
 
   const navigate = useNavigate();
 
-  const { configuration, setConfiguration } = useQuizStore();
+  const { configuration, setConfiguration } = balanceSheetQuizStore();
 
   const [showSettings, setShowSettings] = useState(false);
 

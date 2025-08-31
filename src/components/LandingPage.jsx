@@ -1,22 +1,29 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Container, Typography, Button, Box, Paper, FormGroup, FormControlLabel, Checkbox } from '@mui/material';
 import { Quiz as QuizIcon, PlayArrow as PlayIcon } from '@mui/icons-material';
-import Confetti from 'react-confetti';
 import { create } from 'zustand';
 import Page from './shared/Page';
+import Confetti from './shared/Confetti';
 import BalanceSheetQuizCard from './balanceSheet/BalanceSheetQuizCard';
 import AccountingTransactionsQuizCard from './accountingTransactions/AccountingTransactionsQuizCard';
-import { useScreenSize } from '../hooks/useScreenSize';
-import useQuizStore from '../store/quizStore';
+import mainStore from '../store/mainStore';
 
 export default function LandingPage() {
-  const { width, height } = useScreenSize();
+  const { configuration, setConfiguration } = mainStore();
+
+  useEffect(() => {
+    if (!configuration.hasSeenLandingConfetti) {
+      setConfiguration({ hasSeenLandingConfetti: false });
+
+      const timer = setTimeout(() => setConfiguration({ hasSeenLandingConfetti: true }), 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [configuration.hasSeenLandingConfetti]);
 
   return (
     <Page isLandingPage={true}>
-      {/*@TODO uncomment this*/}
-      {/*<Confetti width={width} height={height} />*/}
+      {!configuration.hasSeenLandingConfetti && <Confetti />}
       <Box sx={{ textAlign: 'center' }}>
         <Typography
           variant='h2'

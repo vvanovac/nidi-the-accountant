@@ -1,4 +1,4 @@
-const quizQuestions = [
+const balanceSheetQuizQuestions = [
   {
     id: 1,
     title: 'Patenti, licence, goodwill',
@@ -963,4 +963,4 @@ const quizQuestions = [
   },
 ];
 
-export default quizQuestions;
+export default balanceSheetQuizQuestions;

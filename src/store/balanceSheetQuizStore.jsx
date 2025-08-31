@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-const useQuizStore = create((set) => ({
+const balanceSheetQuizStore = create((set) => ({
   configuration: {
     shuffleQuestions: true,
     isHardMode: false,
@@ -19,4 +19,4 @@ const useQuizStore = create((set) => ({
     })),
 }));
 
-export default useQuizStore;
+export default balanceSheetQuizStore;
