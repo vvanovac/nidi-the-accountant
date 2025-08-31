@@ -15,26 +15,10 @@ import {
 } from '@mui/material';
 import { PlayArrow as PlayIcon } from '@mui/icons-material';
 import Confetti from 'react-confetti';
-import useQuizStore from '../store/quizStore';
-import routes from '../constants/routes';
-
-const ConfigurationSection = ({ isLastItem = false, children }) => {
-  const theme = useTheme();
-
-  return (
-    <Box
-      sx={{
-        padding: 1,
-        borderRadius: '12px',
-        color: theme.palette.text.primary,
-        backgroundColor: theme.palette.secondary.main,
-        marginBottom: isLastItem ? 0 : 1,
-      }}
-    >
-      {children}
-    </Box>
-  );
-};
+import QuizCardSettingsButton from '../shared/QuizCardSettingsButton';
+import QuizCardConfigurationSection from '../shared/QuizCardConfigurationSection';
+import useQuizStore from '../../store/quizStore';
+import routes from '../../constants/routes';
 
 export default function BalanceSheetQuizCard() {
   const theme = useTheme();
@@ -65,14 +49,14 @@ export default function BalanceSheetQuizCard() {
     ].some(Boolean);
   }, [configuration]);
 
-  const handleStartQuiz = () => navigate(routes.balanceSheetQuiz);
+  const handleQuizStarted = () => navigate(routes.balanceSheetQuiz);
 
   return (
     <Paper
       sx={{
         width: {
           xs: '100%',
-          md: '50%',
+          md: '55%',
         },
         borderRadius: '12px',
         backgroundColor: theme.palette.background.default,
@@ -84,34 +68,11 @@ export default function BalanceSheetQuizCard() {
         <Typography variant='h4'>Bilans stanja</Typography>
         <Typography variant='h6'>Klasifikacija stavki bilansa stanja</Typography>
       </Box>
-      <Box
-        sx={{
-          marginTop: 2,
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-        }}
-      >
-        <Typography variant='body1'>Za najbolje iskustvo, prilagodi kviz po svojoj mjeri</Typography>
-        <Button
-          size='small'
-          variant='contained'
-          color='secondary'
-          onClick={handleConfigurationToggled}
-          sx={{
-            color: theme.palette.text.primary,
-            minWidth: 120,
-            maxWidth: 120,
-          }}
-        >
-          Podešavanja
-        </Button>
-      </Box>
+      <QuizCardSettingsButton onConfigurationToggled={handleConfigurationToggled} />
       <Collapse in={showSettings} timeout={400}>
         <Box sx={{ marginTop: 2 }}>
-          <ConfigurationSection>
-            <Typography variant='body1'>Redoslijed pitanja</Typography>
-            <FormGroup sx={{ marginTop: 1 }}>
+          <QuizCardConfigurationSection title='Redoslijed pitanja'>
+            <FormGroup>
               <FormControlLabel
                 control={
                   <Checkbox
@@ -123,10 +84,9 @@ export default function BalanceSheetQuizCard() {
                 label='Promiješaj pitanja'
               />
             </FormGroup>
-          </ConfigurationSection>
-          <ConfigurationSection>
-            <Typography variant='body1'>Nivo</Typography>
-            <FormGroup sx={{ marginTop: 1 }}>
+          </QuizCardConfigurationSection>
+          <QuizCardConfigurationSection title='Nivo'>
+            <FormGroup>
               <RadioGroup
                 row
                 value={configuration.isHardMode ? 'hard' : 'easy'}
@@ -137,9 +97,8 @@ export default function BalanceSheetQuizCard() {
                 <FormControlLabel value='hard' control={<Radio />} label='Napredni' />
               </RadioGroup>
             </FormGroup>
-          </ConfigurationSection>
-          <ConfigurationSection isLastItem={true}>
-            <Typography variant='body1'>Bilansne kategorije</Typography>
+          </QuizCardConfigurationSection>
+          <QuizCardConfigurationSection title='Bilansne kategorije' isLastSection={true}>
             <FormGroup>
               <FormControlLabel
                 control={
@@ -197,7 +156,7 @@ export default function BalanceSheetQuizCard() {
                 Da bi kviz imao smisla, odaberi bar jednu kategoriju.
               </Typography>
             )}
-          </ConfigurationSection>
+          </QuizCardConfigurationSection>
         </Box>
       </Collapse>
       <Box
@@ -210,7 +169,7 @@ export default function BalanceSheetQuizCard() {
         <Button
           variant='contained'
           size='large'
-          onClick={handleStartQuiz}
+          onClick={handleQuizStarted}
           disabled={!isAnyCategorySelected}
           startIcon={<PlayIcon />}
           sx={{
