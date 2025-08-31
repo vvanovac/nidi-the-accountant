@@ -1,19 +1,9 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {
-  Box,
-  Button,
-  Checkbox,
-  Collapse,
-  FormControlLabel,
-  FormGroup,
-  Paper,
-  Typography,
-  useTheme,
-} from '@mui/material';
-import { PlayArrow as PlayIcon } from '@mui/icons-material';
+import { Box, Checkbox, Collapse, FormControlLabel, FormGroup, Paper, Typography, useTheme } from '@mui/material';
 import QuizCardSettingsButton from '../shared/QuizCardSettingsButton';
 import QuizCardConfigurationSection from '../shared/QuizCardConfigurationSection';
+import StartQuizButton from '../shared/StartQuizButton';
 import accountingTransactionsQuizStore from '../../store/accountingTransactionsQuizStore';
 import routes from '../../constants/routes';
 
@@ -72,32 +62,7 @@ export default function AccountingTransactionsQuizCard() {
           </QuizCardConfigurationSection>
         </Box>
       </Collapse>
-      <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'center',
-          marginTop: 2,
-        }}
-      >
-        <Button
-          variant='contained'
-          size='large'
-          onClick={handleQuizStarted}
-          disabled={false}
-          startIcon={<PlayIcon />}
-          sx={{
-            paddingY: 1.5,
-            paddingX: 4,
-            borderRadius: 3,
-            fontWeight: 'bold',
-            color: '#1D1939',
-            backgroundColor: '#FEFCAE',
-            border: '1px solid #FEFCAE',
-          }}
-        >
-          Početak
-        </Button>
-      </Box>
+      <StartQuizButton onQuizStarted={handleQuizStarted} />
     </Paper>
   );
 }

@@ -7,6 +7,7 @@ import Page from './shared/Page';
 import Confetti from './shared/Confetti';
 import BalanceSheetQuizCard from './balanceSheet/BalanceSheetQuizCard';
 import AccountingTransactionsQuizCard from './accountingTransactions/AccountingTransactionsQuizCard';
+import PayrollCalculationQuizCard from './payrollCalculation/PayrollCalculationQuizCard';
 import mainStore from '../store/mainStore';
 
 export default function LandingPage() {
@@ -81,6 +82,7 @@ export default function LandingPage() {
       >
         <BalanceSheetQuizCard />
         <AccountingTransactionsQuizCard />
+        <PayrollCalculationQuizCard />
       </Box>
     </Page>
   );
