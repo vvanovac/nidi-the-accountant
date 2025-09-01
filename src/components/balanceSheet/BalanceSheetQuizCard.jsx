@@ -58,7 +58,7 @@ export default function BalanceSheetQuizCard() {
         },
         borderRadius: '12px',
         backgroundColor: theme.palette.background.default,
-        color: theme.palette.text.disabled,
+        color: theme.palette.text.secondary,
         padding: 3,
       }}
     >

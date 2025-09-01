@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Box, Button, Typography, useTheme } from '@mui/material';
+import { Box, Button, Collapse, Typography, useTheme } from '@mui/material';
 import Page from '../shared/Page';
 import PageTitle from '../shared/PageTitle';
+import GeneralLedger from '../shared/GeneralLedger';
 import payrollCalculationsQuizQuestions from '../../quiz/payrollCalculationsQuizQuestions';
 import { shuffleQuestions } from '../../helpers/questionsShuffleHelper';
 
@@ -25,8 +26,6 @@ export default function PayrollCalculationQuizPage() {
     });
     setIsSolutionRevealed(false);
   };
-
-  const formatNumber = (number) => number?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
 
   const question = useMemo(() => questions?.at(currentQuestion), [questions, currentQuestion]);
 
@@ -83,177 +82,28 @@ export default function PayrollCalculationQuizPage() {
             },
             fontSize: 12,
             fontStyle: 'italic',
-            color: theme.palette.text.secondary,
+            color: theme.palette.text.primary,
           }}
         >
           Izvor:&nbsp;{question.test}&nbsp;&#8208;&nbsp;promjena&nbsp;
           {question.transaction}
         </Typography>
       </Box>
-      {isSolutionRevealed && (
-        <>
-          <Typography
-            sx={{
-              marginTop: {
-                xs: 2,
-                sm: 5,
-              },
-              marginBottom: 1,
-              fontWeight: 'bold',
-            }}
-          >
-            Rješenje
-          </Typography>
-          <Box
-            sx={{
-              marginBottom: {
-                xs: 2,
-                sm: 5,
-              },
-              width: {
-                xs: '100%',
-                sm: 600,
-              },
-              fontSize: 14,
-            }}
-          >
-            <Box
-              sx={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                height: 30,
-                fontWeight: 'bold',
-              }}
-            >
-              <Box
-                sx={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  border: '1px solid gray',
-                  borderRight: 'none',
-                  textAlign: 'center',
-                  width: {
-                    xs: '100%',
-                    sm: 360,
-                  },
-                  height: 30,
-                }}
-              >
-                Opis
-              </Box>
-              <Box
-                sx={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  border: '1px solid gray',
-                  borderRight: 'none',
-                  textAlign: 'center',
-                  width: {
-                    xs: 80,
-                    sm: 120,
-                  },
-                  minWidth: 80,
-                  height: 30,
-                }}
-              >
-                Duguje
-              </Box>
-              <Box
-                sx={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  border: '1px solid gray',
-                  textAlign: 'center',
-                  width: {
-                    xs: 80,
-                    sm: 120,
-                  },
-                  minWidth: 80,
-                  height: 30,
-                }}
-              >
-                Potražuje
-              </Box>
-            </Box>
-            {question.solution?.map((entry, index) => (
-              <Box
-                key={index}
-                sx={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  height: 30,
-                }}
-              >
-                <Box
-                  sx={{
-                    display: 'flex',
-                    justifyContent: 'flex-start',
-                    alignItems: 'center',
-                    border: '1px solid gray',
-                    borderRight: 'none',
-                    borderTop: 'none',
-                    textAlign: 'center',
-                    width: {
-                      xs: '100%',
-                      sm: 360,
-                    },
-                    height: 30,
-                    paddingLeft: 0.5,
-                    whiteSpace: 'nowrap',
-                    overflow: 'hidden',
-                    textOverflow: 'ellipsis',
-                  }}
-                >
-                  {entry.isDescription ? entry.transactionDescription : entry.description}
-                </Box>
-                <Box
-                  sx={{
-                    display: 'flex',
-                    justifyContent: 'flex-end',
-                    alignItems: 'center',
-                    border: '1px solid gray',
-                    borderRight: 'none',
-                    borderTop: 'none',
-                    textAlign: 'center',
-                    width: {
-                      xs: 80,
-                      sm: 120,
-                    },
-                    minWidth: 80,
-                    height: 30,
-                    paddingRight: 0.5,
-                  }}
-                >
-                  {entry.isDescription ? '' : entry.isDebitSide ? formatNumber(entry.value) : ''}
-                </Box>
-                <Box
-                  sx={{
-                    display: 'flex',
-                    justifyContent: 'flex-end',
-                    alignItems: 'center',
-                    border: '1px solid gray',
-                    borderTop: 'none',
-                    width: {
-                      xs: 80,
-                      sm: 120,
-                    },
-                    minWidth: 80,
-                    height: 30,
-                    paddingRight: 0.5,
-                  }}
-                >
-                  {entry.isDescription ? '' : entry.isDebitSide ? '' : formatNumber(entry.value)}
-                </Box>
-              </Box>
-            ))}
-          </Box>
-        </>
-      )}
+      <Collapse in={isSolutionRevealed} timeout={400}>
+        <Typography
+          sx={{
+            marginTop: {
+              xs: 2,
+              sm: 5,
+            },
+            marginBottom: 1,
+            fontWeight: 'bold',
+          }}
+        >
+          Rješenje
+        </Typography>
+        <GeneralLedger transactions={question.solution} />
+      </Collapse>
       <Box
         sx={{
           marginTop: {

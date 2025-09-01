@@ -44,8 +44,8 @@ const theme = createTheme({
     },
     text: {
       primary: '#1D1939',
-      secondary: '#1D1939',
-      disabled: '#FBE1D0',
+      secondary: '#FBE1D0',
+      disabled: '#9E9E9E',
     },
   },
   breakpoints: {

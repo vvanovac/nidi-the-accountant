@@ -1,7 +1,8 @@
-import { useState } from 'react';
-import { Box, Typography, useTheme } from '@mui/material';
+import { useMemo, useState } from 'react';
+import { Box, Button, Collapse, Typography, useTheme } from '@mui/material';
 import Page from '../shared/Page';
 import PageTitle from '../shared/PageTitle';
+import GeneralLedger from '../shared/GeneralLedger';
 import accountingTransactionsQuizQuestions from '../../quiz/accountingTransactionsQuizQuestions';
 import { shuffleQuestions } from '../../helpers/questionsShuffleHelper';
 import accountingTransactionsQuizStore from '../../store/accountingTransactionsQuizStore';
@@ -25,7 +26,30 @@ export default function AccountingTransactionsQuizPage() {
     return getFinalNumberOfQuestions(questions);
   };
 
-  const [questions] = useState(generateQuestions(accountingTransactionsQuizQuestions));
+  const [questions, setQuestions] = useState(generateQuestions(accountingTransactionsQuizQuestions));
+
+  const handleSolutionToggled = (questionId) => {
+    setQuestions((prevState) => {
+      return prevState.map((question) => {
+        if (question.id !== questionId) return question;
+
+        return {
+          ...question,
+          isSolutionRevealed: !question.isSolutionRevealed,
+        };
+      });
+    });
+  };
+
+  const isEverySolutionRevealed = useMemo(() => {
+    return questions.every((question) => question.isSolutionRevealed);
+  }, [questions]);
+
+  const handleEverySolutionToggled = () => {
+    setQuestions((prevState) => {
+      return prevState.map((question) => ({ ...question, isSolutionRevealed: !isEverySolutionRevealed }));
+    });
+  };
 
   return (
     <Page>
@@ -48,6 +72,8 @@ export default function AccountingTransactionsQuizPage() {
             sx={{
               marginY: 0.5,
               width: '100%',
+              paddingBottom: 2,
+              borderBottom: '1px solid #B3B3B3',
             }}
           >
             <Typography
@@ -113,7 +139,7 @@ export default function AccountingTransactionsQuizPage() {
                     paddingLeft: 2,
                     fontSize: 14,
                     fontStyle: 'italic',
-                    color: theme.palette.text.secondary,
+                    color: theme.palette.text.primary,
                   }}
                 >
                   {question.instructions}
@@ -128,13 +154,69 @@ export default function AccountingTransactionsQuizPage() {
                 },
                 fontSize: 12,
                 fontStyle: 'italic',
-                color: theme.palette.text.secondary,
+                color: theme.palette.text.primary,
               }}
             >
               Izvor:&nbsp;{question.test}&nbsp;&#8208;&nbsp;promjena&nbsp;{question.transaction}
             </Typography>
+            {!!question.solution?.length && (
+              <>
+                <Button
+                  size='small'
+                  variant='outlined'
+                  color='primary'
+                  onClick={() => handleSolutionToggled(question.id)}
+                  sx={{
+                    marginTop: 1,
+                    width: {
+                      xs: '100%',
+                      sm: 'fit-content',
+                    },
+                  }}
+                >
+                  {question.isSolutionRevealed ? 'Sakrij rješenje' : 'Prikaži rješenje'}
+                </Button>
+                <Collapse in={question.isSolutionRevealed} timeout={400}>
+                  <Box sx={{ marginTop: 1 }}>
+                    <GeneralLedger transactions={question.solution} />
+                  </Box>
+                </Collapse>
+              </>
+            )}
           </Box>
         ))}
+        <Box
+          sx={{
+            marginTop: {
+              xs: 2,
+              sm: 5,
+            },
+            paddingBottom: 3,
+            display: 'flex',
+            flexDirection: {
+              xs: 'column',
+              sm: 'row',
+            },
+            justifyContent: 'center',
+            alignItems: 'center',
+            gap: 2,
+          }}
+        >
+          <Button
+            size='large'
+            variant='contained'
+            color='primary'
+            onClick={handleEverySolutionToggled}
+            sx={{
+              width: {
+                xs: '100%',
+                sm: 'fit-content',
+              },
+            }}
+          >
+            {handleEverySolutionToggled ? 'Sakrij rješenja' : 'Prikaži rješenja'}
+          </Button>
+        </Box>
       </Box>
     </Page>
   );
