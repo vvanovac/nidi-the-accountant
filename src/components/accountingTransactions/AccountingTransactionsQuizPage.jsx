@@ -214,7 +214,7 @@ export default function AccountingTransactionsQuizPage() {
               },
             }}
           >
-            {handleEverySolutionToggled ? 'Sakrij rješenja' : 'Prikaži rješenja'}
+            {isEverySolutionRevealed ? 'Sakrij rješenja' : 'Prikaži rješenja'}
           </Button>
         </Box>
       </Box>
