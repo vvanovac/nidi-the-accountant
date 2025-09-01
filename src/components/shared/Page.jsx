@@ -13,7 +13,7 @@ export default function Page({ isLandingPage = false, children }) {
         backgroundColor: theme.palette.background.paper,
         maxWidth: {
           xs: '100%',
-          sm: 1200,
+          sm: 1000,
         },
         boxShadow: 24,
         margin: '0 auto',

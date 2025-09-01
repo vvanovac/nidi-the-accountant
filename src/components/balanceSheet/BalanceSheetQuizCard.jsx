@@ -90,6 +90,10 @@ export default function BalanceSheetQuizCard() {
                 value={configuration.isHardMode ? 'hard' : 'easy'}
                 name='isHardMode'
                 onChange={handleQuizModeChanged}
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                }}
               >
                 <FormControlLabel value='easy' control={<Radio />} label='Osnovni' />
                 <FormControlLabel value='hard' control={<Radio />} label='Napredni' />

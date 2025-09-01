@@ -62,17 +62,19 @@ export default function PayrollCalculationQuizPage() {
         >
           {question?.title}
         </Typography>
-        <Typography
-          sx={{
-            marginTop: {
-              xs: 0,
-              sm: 1,
-            },
-          }}
-        >
-          Broj zaposlenih u preduzeću:&nbsp;
-          <span style={{ fontWeight: 'bold' }}>{question?.totalEmployees} radnika</span>.
-        </Typography>
+        {question?.totalEmployees && (
+          <Typography
+            sx={{
+              marginTop: {
+                xs: 0,
+                sm: 1,
+              },
+            }}
+          >
+            Broj zaposlenih u preduzeću:&nbsp;
+            <span style={{ fontWeight: 'bold' }}>{question?.totalEmployees} radnika</span>.
+          </Typography>
+        )}
         <Typography
           sx={{
             marginTop: {

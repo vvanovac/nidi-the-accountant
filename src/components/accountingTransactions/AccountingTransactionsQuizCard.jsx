@@ -18,6 +18,8 @@ import StartQuizButton from '../shared/StartQuizButton';
 import accountingTransactionsQuizStore from '../../store/accountingTransactionsQuizStore';
 import routes from '../../constants/routes';
 
+const ALLOWED_NUMBER_OF_TRANSACTIONS = [5, 10, 25, 50];
+
 export default function AccountingTransactionsQuizCard() {
   const theme = useTheme();
 
@@ -89,9 +91,9 @@ export default function AccountingTransactionsQuizCard() {
                   flexDirection: 'column',
                 }}
               >
-                <FormControlLabel value={5} control={<Radio />} label='5 promjena' />
-                <FormControlLabel value={10} control={<Radio />} label='10 promjena' />
-                <FormControlLabel value={25} control={<Radio />} label='25 promjena' />
+                {ALLOWED_NUMBER_OF_TRANSACTIONS.map((value, index) => (
+                  <FormControlLabel key={index} value={value} control={<Radio />} label={`${value} promjena`} />
+                ))}
                 <FormControlLabel value='all' control={<Radio />} label='Sve promjene' />
               </RadioGroup>
             </FormGroup>

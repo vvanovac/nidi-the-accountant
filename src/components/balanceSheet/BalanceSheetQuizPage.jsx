@@ -7,6 +7,7 @@ import balanceSheetQuizQuestions from '../../quiz/balanceSheetQuizQuestions';
 import Page from '../shared/Page';
 import PageTitle from '../shared/PageTitle';
 import Confetti from '../shared/Confetti';
+import QuizResult from '../balanceSheet/QuizResult';
 import { shuffleQuestions } from '../../helpers/questionsShuffleHelper';
 import balanceSheetQuizStore from '../../store/balanceSheetQuizStore';
 import routes from '../../constants/routes';
@@ -246,12 +247,7 @@ export default function BalanceSheetQuizPage() {
           ))}
         </form>
       </Box>
-      {isSubmitted && (
-        <Box>
-          {totalScore === questions.length && <Confetti />}
-          Tvoj rezultat je {totalScore} tačnih odgovora.
-        </Box>
-      )}
+      {isSubmitted && <QuizResult totalCorrectAnswers={totalScore} totalQuestions={questions.length} />}
       <Box
         sx={{
           marginTop: {
