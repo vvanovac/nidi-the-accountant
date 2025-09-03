@@ -30,10 +30,10 @@ const payrollCalculationsQuizQuestions = [
       { isDebitSide: true, description: 'Troškovi toplog obroka', value: 8800 },
       { isDebitSide: false, description: 'Obaveze prema zaposlenim', value: 8800 },
       { isDescription: true, transactionDescription: 'za obračun toplog obroka' },
-      { isDebitSide: true, description: 'Obaveze prema zaposlenim', value: 108800 },
+      { isDebitSide: true, description: 'Obaveze prema zaposlenim', value: 58800 },
       { isDebitSide: true, description: 'Obaveze za porez na dohodak', value: 2500 },
       { isDebitSide: true, description: 'Obaveze za doprinose', value: 32500 },
-      { isDebitSide: false, description: 'Transakcijski račun', value: 143800 },
+      { isDebitSide: false, description: 'Transakcijski račun', value: 93800 },
       { isDescription: true, transactionDescription: 'za izmirenje obaveza' },
     ],
   },
@@ -60,7 +60,7 @@ const payrollCalculationsQuizQuestions = [
   {
     id: 4,
     title:
-      'Obračunate su plate radnicima. Podaci poznati za jednog radnika: neto iznos za isplatu 800 KM, porez na dohodak 50 KM, doprinosi iz plata 300 KM i doprinosi na plate 150 KM. Isplaćena je akontacija radniku za odlazak na službeni put u iznosu od 500 KM.',
+      'Obračunate su plate radnicima. Podaci poznati za jednog radnika: neto iznos za isplatu 800 KM, porez na dohodak 50 KM, doprinosi iz plata 300 KM i doprinosi na plate 150 KM. Isplaćena je akontacija radniku za odlazak na službeni put u iznosu od 500 KM. (7 zaposlenih trenutno radi na razvoju novog proizvoda)',
     totalEmployees: 77,
     test: 'Ispitni zadatak 4',
     transaction: 7,

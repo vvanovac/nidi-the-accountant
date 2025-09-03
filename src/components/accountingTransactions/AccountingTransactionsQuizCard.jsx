@@ -18,7 +18,7 @@ import StartQuizButton from '../shared/StartQuizButton';
 import accountingTransactionsQuizStore from '../../store/accountingTransactionsQuizStore';
 import routes from '../../constants/routes';
 
-const ALLOWED_NUMBER_OF_TRANSACTIONS = [5, 10, 25];
+const ALLOWED_NUMBER_OF_TRANSACTIONS = [5, 10, 25, 50];
 
 export default function AccountingTransactionsQuizCard() {
   const theme = useTheme();
